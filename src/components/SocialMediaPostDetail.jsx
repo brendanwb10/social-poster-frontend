@@ -1,5 +1,6 @@
 import { useParams, Link } from 'react-router-dom'
 import useFetchData from '../hooks/useFetchData'
+import FormatDate from './FormatDate'
 import axios from 'axios'
 
 function SocialMediaPostDetail() {
@@ -12,12 +13,13 @@ function SocialMediaPostDetail() {
 
   return (
     <div>
-      <Link to="/">← Back to Posts</Link>
+      <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg flex items-center">
+        <Link to="/">← Back to Posts</Link>
+      </button>
       
       <h1>{data.title}</h1>
       <p><strong>Post:</strong> {data.post}</p>
-      
-      {/* Add edit/delete buttons here if needed */}
+      <p><strong>Scheduled:</strong> {FormatDate(data.schedule_date)}</p>
     </div>
   );
 }
