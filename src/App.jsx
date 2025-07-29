@@ -2,6 +2,19 @@ import { useState } from 'react'
 import useFetchData from './hooks/useFetchData.js'
 import './App.css'
 
+const formatDate = (date) => {
+  const dateToFormat = new Date(date)
+  const month = dateToFormat.getMonth() + 1
+  const day = dateToFormat.getDate()
+  const year = dateToFormat.getFullYear()
+
+  const formattedDate = month + "/" + day + "/" + year
+
+  return formattedDate
+}
+
+
+
 function SocialMediaPostTable() {
   const { data, loading, error } = useFetchData("http://localhost:3000/social_media_posts");
 
@@ -26,7 +39,7 @@ function SocialMediaPostTable() {
 	      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200" key={post.id}>
 	        <td className="px-6 py-4" key={post.title}>{post.title}</td>
 	        <td className="px-6 py-4" key={post.post}>{post.post}</td>
-	        <td className="px-6 py-4" key={post.schedule_date}>{post.schedule_date}</td>
+	        <td className="px-6 py-4" key={post.schedule_date}>{formatDate(post.schedule_date)}</td>
 	      </tr>
 	    ))}
 	  </tbody>
