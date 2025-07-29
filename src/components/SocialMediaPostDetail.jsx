@@ -22,7 +22,13 @@ function SocialMediaPostDetail() {
       </div>
       <div className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
       <div className="p-10">{data.post}</div>
-      <div className="pb-10"><strong>Scheduled For:</strong> {FormatDate(data.schedule_date)}</div>
+      <div className="pb-2"><strong>Scheduled For:</strong> {FormatDate(data.schedule_date)}</div>
+      { data.photos.map(photo => (
+	<div key={photo.id}>
+          <img className="h-100 w-100 mx-auto object-contain pb-2" src={photo.url} alt={photo.caption} />
+	  <div className="pb-5">{photo.caption}</div>
+	</div>
+      ))}
       </div>
     </div>
   );
