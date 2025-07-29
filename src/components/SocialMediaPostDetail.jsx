@@ -4,7 +4,7 @@ import FormatDate from './FormatDate'
 import axios from 'axios'
 
 function SocialMediaPostDetail() {
-  const { id } = useParams(); // Gets the ID from the URL
+  const { id } = useParams();
   const { data, loading, error } = useFetchData(`http://localhost:3000/social_media_posts/${id}`);
 
   if (loading) return <div>Loading...</div>;
@@ -17,9 +17,13 @@ function SocialMediaPostDetail() {
         <Link to="/">← Back to Posts</Link>
       </button>
       
-      <h1>{data.title}</h1>
-      <p><strong>Post:</strong> {data.post}</p>
-      <p><strong>Scheduled:</strong> {FormatDate(data.schedule_date)}</p>
+      <div className="text-lg p-4 text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+        <h1>{data.title}</h1>
+      </div>
+      <div className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
+      <div className="p-10">{data.post}</div>
+      <div className="pb-10"><strong>Scheduled For:</strong> {FormatDate(data.schedule_date)}</div>
+      </div>
     </div>
   );
 }
