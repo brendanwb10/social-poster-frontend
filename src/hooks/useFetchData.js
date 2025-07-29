@@ -1,7 +1,7 @@
 import { useEffect, useState} from 'react';
 import axios from 'axios';
 
-const useFetchData = () => {
+const useFetchData = (url) => {
   const [data, setData] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -9,7 +9,7 @@ const useFetchData = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-	const response = await axios.get("http://localhost:3000/social_media_posts");
+	const response = await axios.get(url);
 	setData(response.data);
       } catch(error) {
         console.log(error);
