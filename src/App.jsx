@@ -1,38 +1,55 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import useFetchData from './hooks/useFetchData.js'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+const formatDate = (date) => {
+  const dateToFormat = new Date(date)
+  const month = dateToFormat.getMonth() + 1
+  const day = dateToFormat.getDate()
+  const year = dateToFormat.getFullYear()
 
+  const formattedDate = month + "/" + day + "/" + year
+
+  return formattedDate
+}
+
+
+
+function SocialMediaPostTable() {
+  const { data, loading, error } = useFetchData("http://localhost:3000/social_media_posts");
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
+  if (!data) return <div>No data available</div>;
+  
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+        <h1>Social Media Posts</h1>
+	<table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+	  <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+	    <tr>
+	      <th scope="col" className="px-6 py-3">Title</th>
+	      <th scope="col" className="px-6 py-3">Post</th>
+	      <th scope="col" className="px-6 py-3">Scheduled For</th>
+	    </tr>
+	  </thead>
+	  <tbody>
+            { data.map(post => (
+	      <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200" key={post.id}>
+	        <td className="px-6 py-4" key={post.title}>{post.title}</td>
+	        <td className="px-6 py-4" key={post.post}>{post.post}</td>
+	        <td className="px-6 py-4" key={post.schedule_date}>{formatDate(post.schedule_date)}</td>
+	      </tr>
+	    ))}
+	  </tbody>
+	</table>
+
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-	  <h1 class="text-3xl font-bold underline">
-	    Hello world!
-	  </h1>
     </>
   )
 }
 
-export default App
+export default function App() {
+  return <SocialMediaPostTable />;
+}
